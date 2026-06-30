@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Future Global Technology — AI-Powered Gaming Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080B14;
+    --navy: #0D1428;
+    --surface: #111827;
+    --card: #151e30;
+    --border: rgba(255,255,255,0.08);
+    --border-lit: rgba(79,195,247,0.3);
+    --indigo: #4B3BFF;
+    --indigo-light: #7B6FFF;
+    --cyan: #00F5D4;
+    --cyan-dim: rgba(0,245,212,0.15);
+    --gold: #FFB800;
+    --gold-dim: rgba(255,184,0,0.12);
+    --text: #F0F4FF;
+    --text-dim: rgba(240,244,255,0.55);
+    --text-muted: rgba(240,244,255,0.35);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── GRID LINES ── */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(75,59,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(75,59,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 72px;
+    background: rgba(8,11,20,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-mark {
+    width: 38px;
+    height: 38px;
+    position: relative;
+  }
+
+  .logo-mark svg { width: 100%; height: 100%; }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .logo-en {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.06em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cyan); }
+
+  .nav-cta {
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .nav-cta:hover {
+    background: var(--cyan);
+    color: var(--black);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-glow-1 {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(75,59,255,0.18) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-slow 6s ease-in-out infinite;
+  }
+
+  .hero-glow-2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,245,212,0.1) 0%, transparent 70%);
+    top: 30%;
+    right: 10%;
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  /* ── AI AVATAR ORB (signature element) ── */
+  .ai-orb {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 48px;
+    position: relative;
+  }
+
+  .orb-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(0,245,212,0.3);
+    animation: spin 12s linear infinite;
+  }
+
+  .orb-ring::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--cyan);
+    border-radius: 50%;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 20px var(--cyan), 0 0 40px rgba(0,245,212,0.5);
+  }
+
+  .orb-ring-2 {
+    position: absolute;
+    inset: 14px;
+    border-radius: 50%;
+    border: 1px solid rgba(75,59,255,0.4);
+    animation: spin 8s linear infinite reverse;
+  }
+
+  .orb-ring-2::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--indigo-light);
+    border-radius: 50%;
+    bottom: -4px;
+    left: 30%;
+    box-shadow: 0 0 15px var(--indigo-light);
+  }
+
+  .orb-core {
+    position: absolute;
+    inset: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(123,111,255,0.9), rgba(75,59,255,0.6), rgba(8,11,20,0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 40px rgba(75,59,255,0.4),
+      inset 0 0 30px rgba(0,0,0,0.5);
+    animation: orb-breathe 4s ease-in-out infinite;
+  }
+
+  .orb-face {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .orb-eyes {
+    display: flex;
+    gap: 12px;
+  }
+
+  .orb-eye {
+    width: 8px;
+    height: 8px;
+    background: var(--cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--cyan);
+    animation: blink 5s ease-in-out infinite;
+  }
+
+  .orb-eye:nth-child(2) { animation-delay: 0.1s; }
+
+  .orb-mouth {
+    width: 20px;
+    height: 3px;
+    border-bottom: 2px solid var(--cyan);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 2px 8px rgba(0,245,212,0.5);
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes orb-breathe {
+    0%, 100% { box-shadow: 0 0 40px rgba(75,59,255,0.4), inset 0 0 30px rgba(0,0,0,0.5); }
+    50% { box-shadow: 0 0 70px rgba(75,59,255,0.7), 0 0 120px rgba(75,59,255,0.2), inset 0 0 30px rgba(0,0,0,0.5); }
+  }
+
+  @keyframes blink {
+    0%, 94%, 100% { transform: scaleY(1); }
+    96% { transform: scaleY(0.1); }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--cyan);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .hero-title .line-gold { color: var(--gold); }
+  .hero-title .line-white { color: var(--text); }
+  .hero-title .line-dim { color: var(--text-dim); }
+
+  .hero-zh {
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    margin-bottom: 28px;
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    padding: 14px 36px;
+    background: var(--cyan);
+    color: var(--black);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,245,212,0.4);
+  }
+
+  .btn-secondary {
+    padding: 13px 36px;
+    background: transparent;
+    color: var(--text);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text);
+    color: var(--text);
+  }
+
+  /* scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-muted);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    animation: bounce 2.5s ease-in-out infinite;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--text-muted), transparent);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(13,20,40,0.6);
+    padding: 32px 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat-item {
+    padding: 0 32px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; padding-right: 0; }
+
+  .stat-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-number span { color: var(--gold); font-size: 24px; }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+
+  /* ── SECTION TEMPLATE ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 3vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .section-subtitle {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 600px;
+    line-height: 1.8;
+    margin-bottom: 64px;
+  }
+
+  /* ── WORKLOAD CARDS ── */
+  .workload-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .workload-card {
+    background: var(--card);
+    padding: 40px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .workload-card:hover { background: #192035; }
+
+  .workload-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .workload-card:hover::before { opacity: 1; }
+
+  .wc-cyan::before { background: var(--cyan); }
+  .wc-gold::before { background: var(--gold); }
+  .wc-indigo::before { background: var(--indigo-light); }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-icon svg { width: 100%; height: 100%; }
+
+  .card-tag {
+    display: inline-block;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 3px 10px;
+    margin-bottom: 16px;
+  }
+
+  .tag-cyan { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(0,245,212,0.25); }
+  .tag-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(255,184,0,0.25); }
+  .tag-indigo { background: rgba(75,59,255,0.1); color: var(--indigo-light); border: 1px solid rgba(75,59,255,0.3); }
+
+  .card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .card-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .spec-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .spec-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot-cyan { background: var(--cyan); }
+  .dot-gold { background: var(--gold); }
+  .dot-indigo { background: var(--indigo-light); }
+
+  /* ── AI AVATAR SECTION ── */
+  .avatar-section {
+    padding: 100px 48px;
+    background: linear-gradient(180deg, transparent, rgba(13,20,40,0.8), transparent);
+  }
+
+  .avatar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .avatar-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatar-stage {
+    width: 320px;
+    height: 440px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 32px;
+  }
+
+  .avatar-bg-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: radial-gradient(ellipse at center top, rgba(75,59,255,0.25), transparent 70%);
+  }
+
+  .avatar-figure {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .avatar-orb-large {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 16px;
+    position: relative;
+  }
+
+  .avatar-orb-large .orb-ring { animation: spin 10s linear infinite; }
+  .avatar-orb-large .orb-ring-2 { animation: spin 6s linear infinite reverse; }
+  .avatar-orb-large .orb-core {
+    background: radial-gradient(circle at 35% 35%, rgba(75,59,255,0.95), rgba(30,20,140,0.8));
+    animation: orb-breathe 3s ease-in-out infinite;
+  }
+
+  .avatar-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .avatar-role {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+  }
+
+  /* live indicator */
+  .live-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,50,50,0.15);
+    border: 1px solid rgba(255,80,80,0.4);
+    padding: 4px 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    color: #FF5050;
+    letter-spacing: 0.2em;
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    background: #FF5050;
+    border-radius: 50%;
+    animation: live-pulse 1.2s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  .chat-bubbles {
+    position: absolute;
+    bottom: 32px;
+    left: -80px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 200px;
+  }
+
+  .bubble {
+    background: rgba(13,20,40,0.95);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.4;
+    position: relative;
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+  }
+
+  .bubble:nth-child(1) { animation-delay: 1s; }
+  .bubble:nth-child(2) { animation-delay: 2s; }
+  .bubble:nth-child(3) { animation-delay: 3s; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .bubble-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 9px;
+    color: var(--cyan);
+    margin-bottom: 3px;
+  }
+
+  .avatar-content .section-subtitle { max-width: 100%; }
+
+  .avatar-features {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .avatar-feat {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .feat-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--cyan-dim);
+    border: 1px solid rgba(0,245,212,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .feat-icon svg { width: 20px; height: 20px; color: var(--cyan); }
+
+  .feat-icon.gold-icon {
+    background: var(--gold-dim);
+    border-color: rgba(255,184,0,0.2);
+  }
+
+  .feat-icon.gold-icon svg { color: var(--gold); }
+
+  .feat-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .feat-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── INFRA DIAGRAM ── */
+  .infra-section {
+    background: rgba(13,20,40,0.5);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 48px;
+  }
+
+  .infra-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .infra-diagram {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 0;
+    align-items: center;
+    min-height: 320px;
+  }
+
+  .infra-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .infra-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .infra-node {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .infra-node:hover { border-color: var(--cyan); }
+
+  .infra-node-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 4px;
+  }
+
+  .infra-node-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .nc { color: var(--cyan); }
+  .ng { color: var(--gold); }
+  .ni { color: var(--indigo-light); }
+
+  .gke-hub {
+    background: linear-gradient(135deg, rgba(75,59,255,0.15), rgba(8,11,20,0.9));
+    border: 2px solid rgba(75,59,255,0.5);
+    padding: 36px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .gke-hub::before {
+    content: 'GKE';
+    position: absolute;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(75,59,255,0.06);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+  }
+
+  .gke-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--indigo-light);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  .gke-pods {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+
+  .pod {
+    background: rgba(75,59,255,0.12);
+    border: 1px solid rgba(75,59,255,0.3);
+    padding: 4px 10px;
+    font-size: 10px;
+    font-family: 'Orbitron', sans-serif;
+    color: var(--indigo-light);
+    letter-spacing: 0.1em;
+  }
+
+  .connector-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(75,59,255,0.5), transparent);
+    position: relative;
+  }
+
+  .connector-line::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid var(--indigo-light);
+    border-right: 2px solid var(--indigo-light);
+    transform: rotate(45deg) translateY(-50%);
+    right: 0;
+    top: 0;
+  }
+
+  /* ── MARKETS ── */
+  .markets-section { }
+
+  .markets-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 60px;
+  }
+
+  .market-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .market-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,184,0,0.3);
+  }
+
+  .market-flag {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .market-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+
+  .market-status {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── GENAI SECTION ── */
+  .genai-section {
+    border-top: 1px solid var(--border);
+    background: rgba(8,11,20,0.7);
+    padding: 100px 48px;
+  }
+
+  .genai-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .genai-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .genai-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .genai-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  .gc-cyan::after { background: linear-gradient(90deg, transparent, var(--cyan), transparent); }
+  .gc-gold::after { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+  .genai-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .genai-card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .genai-card-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 120px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(75,59,255,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(32px, 4vw, 60px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin: 0 auto 20px;
+  }
+
+  .cta-sub {
+    font-size: 17px;
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto 48px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--cyan); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: rgba(75,59,255,0.4); }
+
+  /* ── FULL WIDTH WRAPPERS ── */
+  .full-width { max-width: none; padding: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="20,2 38,11 38,29 20,38 2,29 2,11" stroke="#00F5D4" stroke-width="1.5" fill="none"/>
+        <polygon points="20,8 32,14.5 32,25.5 20,32 8,25.5 8,14.5" stroke="#4B3BFF" stroke-width="1" fill="rgba(75,59,255,0.1)"/>
+        <circle cx="20" cy="20" r="4" fill="#00F5D4"/>
+        <line x1="20" y1="2" x2="20" y2="8" stroke="#00F5D4" stroke-width="1.5"/>
+        <line x1="20" y1="32" x2="20" y2="38" stroke="#00F5D4" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-en">FUTURE GLOBAL</span>
+      <span class="logo-sub">Technology</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#solutions">AI Solutions</a></li>
+    <li><a href="#ai-avatar">AI Avatar</a></li>
+    <li><a href="#infra">Infrastructure</a></li>
+    <li><a href="#markets">Markets</a></li>
+    <li><a href="#genai">GenAI</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Contact Us</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-inner">
+    <div class="ai-orb">
+      <div class="orb-ring"></div>
+      <div class="orb-ring-2"></div>
+      <div class="orb-core">
+        <div class="orb-face">
+          <div class="orb-eyes">
+            <div class="orb-eye"></div>
+            <div class="orb-eye"></div>
+          </div>
+          <div class="orb-mouth"></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-eyebrow">Southeast Asia's Premier AI Gaming Platform</div>
+    <h1 class="hero-title">
+      <span class="line-gold">THE FUTURE</span><br>
+      <span class="line-white">OF ONLINE</span><br>
+      <span class="line-dim">ENTERTAINMENT</span>
+    </h1>
+    <p class="hero-zh" style="font-family:'Inter',sans-serif; font-size: clamp(14px,1.5vw,18px); letter-spacing:0.08em; font-weight:300;">Future Global Technology — Redefining Online Entertainment</p>
+    <p class="hero-desc">
+      AI-powered gaming infrastructure at scale — from GKE clusters to real-time betting platforms and virtual AI cheerleaders for the next generation of online casino entertainment.
+    </p>
+    <div class="hero-actions">
+      <a href="#workloads" class="btn-primary">Explore Platform</a>
+      <a href="#contact" class="btn-secondary">Partner With Us</a>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</div>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item">
+    <div class="stat-number">99.9<span>%</span></div>
+    <div class="stat-label">Platform Uptime SLA</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">&lt;50<span>ms</span></div>
+    <div class="stat-label">Bet Streaming Latency</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">5<span>+</span></div>
+    <div class="stat-label">SEA Markets Served</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">10K<span>+</span></div>
+    <div class="stat-label">Concurrent Players</div>
+  </div>
+</div>
+
+<!-- WORKLOADS -->
+<section id="solutions">
+  <div class="section-eyebrow">Gaming AI Solutions</div>
+  <h2 class="section-title">Intelligent Solutions<br>Built for Scale</h2>
+  <p class="section-subtitle">Six production-grade AI-powered solutions powering the most comprehensive online gaming and entertainment platform in Southeast Asia.</p>
+  <div class="workload-grid">
+
+    <div class="workload-card wc-indigo">
+      <div class="card-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="4" y="4" width="40" height="40" rx="2" stroke="#4B3BFF" stroke-width="2"/>
+          <path d="M14 24L20 30L34 18" stroke="#7B6FFF" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="8" stroke="#4B3BFF" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-indigo">AI Solution</span>
+      <div class="card-title">Gaming Platform</div>
+      <p class="card-desc">High-availability online casino game engine supporting thousands of concurrent players with real-time state sync.</p>
+      <div class="card-specs">
+        <div class="spec-item"><div class="spec-dot dot-indigo"></div>Multi-tenant game sessions</div>
+        <div class="spec-item"><div class="spec-dot dot-indigo"></div>Provably fair RNG engine</div>
+        <div class="spec-item"><div class="spec-dot dot-indigo"></div>Real-time wallet & balance</div>
+      </div>
+    </div>
+
+    <div class="workload-card wc-cyan">
+      <div class="card-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="6" y="8" width="36" height="32" rx="2" stroke="#00F5D4" stroke-width="2"/>
+          <circle cx="12" cy="16" r="2" fill="#00F5D4"/>
+          <circle cx="12" cy="24" r="2" fill="#00F5D4" opacity="0.5"/>
+          <circle cx="12" cy="32" r="2" fill="#00F5D4" opacity="0.3"/>
+          <rect x="20" y="12" width="16" height="2" rx="1" fill="#00F5D4" opacity="0.6"/>
+          <rect x="20" y="20" width="12" height="2" rx="1" fill="#00F5D4" opacity="0.4"/>
+          <rect x="20" y="28" width="14" height="2" rx="1" fill="#00F5D4" opacity="0.3"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-cyan">AI Solution</span>
+      <div class="card-title">GKE & Database Layer</div>
+      <p class="card-desc">Kubernetes-orchestrated microservices on Google GKE with distributed databases for sub-millisecond game state persistence.</p>
+      <div class="card-specs">
+        <div class="spec-item"><div class="spec-dot dot-cyan"></div>Auto-scaling node pools</div>
+        <div class="spec-item"><div class="spec-dot dot-cyan"></div>Distributed SQL + Redis</div>
+        <div class="spec-item"><div class="spec-dot dot-cyan"></div>Multi-region failover</div>
+      </div>
+    </div>
+
+    <div class="workload-card wc-gold">
+      <div class="card-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="20" r="10" stroke="#FFB800" stroke-width="2"/>
+          <path d="M8 40c0-8.837 7.163-14 16-14s16 5.163 16 14" stroke="#FFB800" stroke-width="2" stroke-linecap="round"/>
+          <path d="M30 14l4-4M34 14l4-4" stroke="#FFB800" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-gold">AI Solution</span>
+      <div class="card-title">Online Casino Games</div>
+      <p class="card-desc">Full suite of live table games — baccarat, roulette, poker, slots — delivered via low-latency video streams with HD quality.</p>
+      <div class="card-specs">
+        <div class="spec-item"><div class="spec-dot dot-gold"></div>Baccarat / Roulette / Poker</div>
+        <div class="spec-item"><div class="spec-dot dot-gold"></div>Slot engine with jackpots</div>
+        <div class="spec-item"><div class="spec-dot dot-gold"></div>Live dealer integration</div>
+      </div>
+    </div>
+
+    <div class="workload-card wc-cyan">
+      <div class="card-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="4" y="10" width="40" height="28" rx="2" stroke="#00F5D4" stroke-width="2"/>
+          <circle cx="24" cy="24" r="6" stroke="#00F5D4" stroke-width="1.5"/>
+          <circle cx="24" cy="24" r="2" fill="#00F5D4"/>
+          <path d="M4 18h4M40 18h4" stroke="#00F5D4" stroke-width="2"/>
+          <path d="M4 30h4M40 30h4" stroke="#00F5D4" stroke-width="2"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-cyan">AI Solution</span>
+      <div class="card-title">Live Betting Streamer</div>
+      <p class="card-desc">Real-time sports and game betting broadcast infrastructure with adaptive bitrate streaming and in-stream bet placement.</p>
+      <div class="card-specs">
+        <div class="spec-item"><div class="spec-dot dot-cyan"></div>WebRTC low-latency feeds</div>
+        <div class="spec-item"><div class="spec-dot dot-cyan"></div>Odds engine integration</div>
+        <div class="spec-item"><div class="spec-dot dot-cyan"></div>In-stream bet UI overlay</div>
+      </div>
+    </div>
+
+    <div class="workload-card wc-indigo">
+      <div class="card-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="18" r="10" stroke="#7B6FFF" stroke-width="2"/>
+          <path d="M14 30c-4 2-6 6-6 8h32c0-2-2-6-6-8" stroke="#7B6FFF" stroke-width="2"/>
+          <path d="M20 16l2 4 4-8" stroke="#00F5D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="34" cy="10" r="5" fill="rgba(75,59,255,0.3)" stroke="#7B6FFF" stroke-width="1.5"/>
+          <path d="M32 10l1.5 1.5 2.5-3" stroke="#00F5D4" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-indigo">AI Solution</span>
+      <div class="card-title">AI Host & Cheerleader</div>
+      <p class="card-desc">Virtual AI avatar hosts powered by real-time LLM inference — engaging players with dynamic commentary, celebrations, and game narration.</p>
+      <div class="card-specs">
+        <div class="spec-item"><div class="spec-dot dot-indigo"></div>Real-time voice synthesis</div>
+        <div class="spec-item"><div class="spec-dot dot-indigo"></div>Multilingual (ZH/EN/TH/VI)</div>
+        <div class="spec-item"><div class="spec-dot dot-indigo"></div>Emotion-reactive expressions</div>
+      </div>
+    </div>
+
+    <div class="workload-card wc-gold">
+      <div class="card-icon">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M8 38V20L24 10l16 10v18" stroke="#FFB800" stroke-width="2"/>
+          <rect x="18" y="26" width="12" height="12" stroke="#FFB800" stroke-width="1.5"/>
+          <path d="M24 26v12" stroke="#FFB800" stroke-width="1" opacity="0.4"/>
+          <circle cx="36" cy="16" r="6" fill="rgba(255,184,0,0.1)" stroke="#FFB800" stroke-width="1.5"/>
+          <path d="M34 16l1.5 1.5 3-3" stroke="#FFB800" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="card-tag tag-gold">AI Solution</span>
+      <div class="card-title">GenAI Narrative Platform</div>
+      <p class="card-desc">Interactive storytelling engine powered by generative AI — creating personalized game narratives, quests, and player journeys in real time.</p>
+      <div class="card-specs">
+        <div class="spec-item"><div class="spec-dot dot-gold"></div>Dynamic plot generation</div>
+        <div class="spec-item"><div class="spec-dot dot-gold"></div>Player behavior modeling</div>
+        <div class="spec-item"><div class="spec-dot dot-gold"></div>Multi-modal content output</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AI AVATAR SECTION -->
+<div class="avatar-section" id="ai-avatar">
+  <div class="avatar-inner">
+    <div class="avatar-visual">
+      <div class="avatar-stage">
+        <div class="avatar-bg-glow"></div>
+        <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+        <div class="avatar-figure">
+          <div class="avatar-orb-large">
+            <div class="orb-ring"></div>
+            <div class="orb-ring-2"></div>
+            <div class="orb-core">
+              <div class="orb-face">
+                <div class="orb-eyes">
+                  <div class="orb-eye"></div>
+                  <div class="orb-eye"></div>
+                </div>
+                <div class="orb-mouth"></div>
+              </div>
+            </div>
+          </div>
+      <div class="avatar-name">LUNA AI</div>
+      <div class="avatar-role">VIRTUAL HOST · AI CHEERLEADER</div>
+        </div>
+      </div>
+      <div class="chat-bubbles">
+        <div class="bubble">
+          <div class="bubble-name">LUNA AI</div>
+          Congratulations! You hit the jackpot! 🎉
+        </div>
+        <div class="bubble">
+          <div class="bubble-name">LUNA AI</div>
+          Next round starts in 5s — ready?
+        </div>
+        <div class="bubble">
+          <div class="bubble-name">LUNA AI</div>
+          Your lucky streak continues! 🌟
+        </div>
+      </div>
+    </div>
+
+    <div class="avatar-content">
+      <div class="section-eyebrow">AI Avatar Technology</div>
+      <h2 class="section-title">Virtual AI<br>Host & Cheerleader</h2>
+      <p class="section-subtitle">
+        Our AI cheerleaders and hosts are always live — engaging every player with real-time reactions, personalized commentary, and multilingual support across all games.
+      </p>
+      <div class="avatar-features">
+        <div class="avatar-feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M9 9a3 3 0 0 1 6 0c0 2-3 3-3 3"/>
+              <circle cx="12" cy="17" r="0.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <div class="feat-title">LLM-Powered Conversations</div>
+            <div class="feat-desc">Real-time large language model inference enables natural, context-aware player interactions in Mandarin, Thai, Vietnamese, and English.</div>
+          </div>
+        </div>
+        <div class="avatar-feat">
+          <div class="feat-icon gold-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="feat-title">Emotion-Reactive Expressions</div>
+            <div class="feat-desc">The AI avatar dynamically adjusts facial expressions, tone, and energy based on game outcomes — celebrating wins, encouraging losses.</div>
+          </div>
+        </div>
+        <div class="avatar-feat">
+          <div class="feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="feat-title">24/7 Live Streaming Integration</div>
+            <div class="feat-desc">AI avatars stream alongside human dealers, providing always-on hosting even outside business hours with zero latency personality.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFRA -->
+<div class="infra-section" id="infra">
+  <div class="infra-inner">
+    <div class="section-eyebrow">Infrastructure</div>
+    <h2 class="section-title">GKE-Powered<br>Game Architecture</h2>
+    <p class="section-subtitle">Google Kubernetes Engine forms the backbone of every game session, with microservices auto-scaling to match real-time player demand.</p>
+
+    <div class="infra-diagram">
+      <div class="infra-col">
+        <div class="infra-node">
+          <div class="infra-node-label nc">Players / CDN</div>
+          <div class="infra-node-sub">Edge → Load Balancer</div>
+        </div>
+        <div class="infra-node">
+          <div class="infra-node-label ng">Game Clients</div>
+          <div class="infra-node-sub">Web · iOS · Android</div>
+        </div>
+        <div class="infra-node">
+          <div class="infra-node-label ni">AI Avatar Stream</div>
+          <div class="infra-node-sub">WebRTC · HLS</div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; padding: 0 24px;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 40px;">
+          <div class="connector-line"></div>
+          <div class="connector-line"></div>
+          <div class="connector-line"></div>
+        </div>
+      </div>
+
+      <div class="infra-center" style="width: 100%;">
+        <div class="gke-hub">
+          <div class="gke-title">Google GKE Cluster</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Kubernetes Orchestration</div>
+          <div class="gke-pods">
+            <span class="pod">game-svc</span>
+            <span class="pod">bet-engine</span>
+            <span class="pod">ai-host</span>
+            <span class="pod">wallet-api</span>
+            <span class="pod">stream-svc</span>
+            <span class="pod">genai-svc</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; padding: 0 24px;">
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 40px;">
+          <div class="connector-line" style="transform: rotate(180deg);"></div>
+          <div class="connector-line" style="transform: rotate(180deg);"></div>
+          <div class="connector-line" style="transform: rotate(180deg);"></div>
+        </div>
+      </div>
+
+      <div class="infra-col">
+        <div class="infra-node">
+          <div class="infra-node-label nc">PostgreSQL + Redis</div>
+          <div class="infra-node-sub">Game state & sessions</div>
+        </div>
+        <div class="infra-node">
+          <div class="infra-node-label ng">Data Warehouse</div>
+          <div class="infra-node-sub">BigQuery analytics</div>
+        </div>
+        <div class="infra-node">
+          <div class="infra-node-label ni">LLM Inference</div>
+          <div class="infra-node-sub">GPU node pools</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MARKETS -->
+<section id="markets">
+  <div class="section-eyebrow">Market Coverage</div>
+  <h2 class="section-title">Southeast Asia<br>Gaming Markets</h2>
+  <p class="section-subtitle">Localized for language, regulation, and culture — serving the fastest-growing online entertainment markets in the world.</p>
+  <div class="markets-grid">
+    <div class="market-card">
+      <span class="market-flag">🇹🇭</span>
+      <div class="market-name">THAILAND</div>
+      <div class="market-status">● Active</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇻🇳</span>
+      <div class="market-name">VIETNAM</div>
+      <div class="market-status">● Active</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇵🇭</span>
+      <div class="market-name">PHILIPPINES</div>
+      <div class="market-status">● Active</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇲🇾</span>
+      <div class="market-name">MALAYSIA</div>
+      <div class="market-status">◐ Launching</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇮🇩</span>
+      <div class="market-name">INDONESIA</div>
+      <div class="market-status">◐ Launching</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇸🇬</span>
+      <div class="market-name">SINGAPORE</div>
+      <div class="market-status">◐ Launching</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇰🇭</span>
+      <div class="market-name">CAMBODIA</div>
+      <div class="market-status">◌ Planned</div>
+    </div>
+    <div class="market-card">
+      <span class="market-flag">🇹🇼</span>
+      <div class="market-name">TAIWAN</div>
+      <div class="market-status">● HQ</div>
+    </div>
+  </div>
+</section>
+
+<!-- GENAI -->
+<div class="genai-section" id="genai">
+  <div class="genai-inner">
+    <div class="section-eyebrow">Generative AI</div>
+    <h2 class="section-title">GenAI Powered<br>Interactive Narrative</h2>
+    <p class="section-subtitle">Every player gets a unique story. Our generative AI narrative engine crafts personalized game journeys — turning casino sessions into immersive, story-driven adventures.</p>
+
+    <div class="genai-cards">
+      <div class="genai-card gc-cyan">
+        <div class="genai-number" style="color: var(--cyan);">∞</div>
+        <div class="genai-card-title">Infinite Story Paths</div>
+        <p class="genai-card-desc">Generative AI creates unique narrative arcs for each player session — no two journeys are the same. Dynamic plot branches adapt to player choices, bet patterns, and outcomes in real time.</p>
+      </div>
+      <div class="genai-card gc-gold">
+        <div class="genai-number" style="color: var(--gold);">AI</div>
+        <div class="genai-card-title">Character Dialogue System</div>
+        <p class="genai-card-desc">LLM-driven characters deliver contextual commentary, side quests, and story rewards. Players interact with AI NPCs that remember their history and evolve across sessions.</p>
+      </div>
+      <div class="genai-card gc-gold">
+        <div class="genai-number" style="color: var(--gold);">12+</div>
+        <div class="genai-card-title">Game Universe Templates</div>
+        <p class="genai-card-desc">Fantasy empires, futuristic cities, ancient mythologies — GenAI skins any casino game with a rich thematic narrative overlay without changing core game mechanics.</p>
+      </div>
+      <div class="genai-card gc-cyan">
+        <div class="genai-number" style="color: var(--cyan);">4x</div>
+        <div class="genai-card-title">Engagement Multiplier</div>
+        <p class="genai-card-desc">Narrative-driven sessions show 4× higher session duration and 2.5× return rate compared to standard casino UX. Story progression rewards keep players invested beyond individual bets.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section" id="contact" style="max-width: none;">
+  <div class="cta-glow"></div>
+  <div style="position: relative; z-index: 2;">
+    <div class="section-eyebrow" style="justify-content: center;">Business Collaboration</div>
+    <h2 class="cta-title">Build the Future<br>of Gaming With Us</h2>
+    <p class="cta-sub">Partner with Future Global Technology to deploy AI-powered gaming infrastructure across Southeast Asia.</p>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px;">
+      <a href="mailto:info@futureglobals.com" class="btn-primary">Schedule a Demo</a>
+      <a href="#solutions" class="btn-secondary">View AI Solutions</a>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 8px;">
+      <div style="width: 28px; height: 1px; background: rgba(255,255,255,0.2);"></div>
+      <p style="font-size: 13px; color: var(--text-muted); letter-spacing: 0.08em;">
+        For business inquiries contact us at
+        <a href="mailto:info@futureglobals.com" style="color: var(--cyan); text-decoration: none; font-weight: 600; margin-left: 6px;">info@futureglobals.com</a>
+      </p>
+      <div style="width: 28px; height: 1px; background: rgba(255,255,255,0.2);"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="logo-en" style="margin-bottom: 4px;">FUTURE GLOBAL TECHNOLOGY</div>
+    <div class="footer-copy">© 2025 Future Global Technology Co., Ltd. · All rights reserved · <a href="mailto:info@futureglobals.com" style="color: var(--cyan); text-decoration: none;">info@futureglobals.com</a></div>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Responsible Gaming</a></li>
+    <li><a href="#">Careers</a></li>
+  </ul>
+</footer>
+
+<script>
+// Intersection Observer for subtle reveal animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.style.opacity = '1';
+      el.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.workload-card, .market-card, .genai-card, .infra-node').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
